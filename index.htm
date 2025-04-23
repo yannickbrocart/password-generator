@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang='fr'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Password generator version 1.0</title>
+    <link rel='stylesheet' href='assets/fontawesome/css/all.min.css'>
+    <link rel='stylesheet' href='css/password-generator.css'>
+</head>
+
+<body>
+    <div id='container' class='container'>
+        <div id='password-generator' class='password-generator'>
+            <div id='password-title' class='title'>
+                <p>Password Generator</p>
+            </div>
+
+            <div id='password-display' class='password-display'>
+                <div id='password' class='password-content'></div>
+                <div id='buttons' class='password-buttons'>
+                    <div id='generate' class='button' title='Generate'>
+                        <i class='fa-solid fa-rotate-right'></i>
+                    </div>
+                    <div id='copy' class='button' title='Copy'>
+                        <i class='fa-solid fa-copy'></i>
+                    </div>
+                    <div id='settings' class='button' title='Settings'>
+                        <i class='fa-solid fa-sliders'></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div id='password-strenght' class='password-strenght'>
+                <div id='strenght-data' class='strenght-data'>
+                    <div id='security-score' class='security-score'>
+                        <p class="sub-title">Security score: 
+                            <span id='score' class='score'></span>
+                        </p>
+                    </div>
+                    <div id='crack-time' class='crack-time'>
+                        <p class='sub-title'>Estimate crack time:
+                            <span id='duration' class='duration'></span>
+                        </p>
+                    </div>
+                </div>
+                <div id='head-progress-container' class='head-progress-container'>
+                    <div id='head-progress' class='head-progress'></div>
+                </div>
+                <div id='password-lenght' class='password-lenght'>
+                    <div id='slider-component' class='slider-component'>
+                        <label for='slider'>Chose lenght in a range between 4 and 24</label><br />
+                        <input id='slider' type='range' class='slider' min=2 max=24 value=12 list='markers' step='1' />
+                        <datalist id='markers'>
+                            <option value='2'></option>
+                            <option value='4'></option>
+                            <option value='6'></option>
+                            <option value='8'></option>
+                            <option value='10'></option>
+                            <option value='12'></option>
+                            <option value='14'></option>
+                            <option value='16'></option>
+                            <option value='18'></option>
+                            <option value='20'></option>
+                            <option value='22'></option>
+                            <option value='24'></option>
+                        </datalist>
+                    </div>
+                    <div id='slider-number' class='slider-number'></div>
+                </div>
+            </div>
+
+            <div id='password-settings' class='password-settings'>                
+                <div id='characteres-options' class='characteres-options'>
+                    <div class='input'>
+                        <input type='checkbox' id='input-all' checked />
+                        <label for='input-all'>All characteres</label>
+                    </div>
+                    <div class='input'>
+                        <input type='checkbox' id='input-lowercase' checked />
+                        <label for='input-lowercase'>Lowercase <span class='separator'>[ a-z ]</span></label>
+                    </div>
+                    <div class='input'>
+                        <input type='checkbox' id='input-uppercase' checked />
+                        <label for='input-uppercase'>Uppercase <span class='separator'>[ A-Z ]</span></label>
+                    </div>
+                    <div class='input'>
+                        <input type='checkbox' id='input-numbers' checked />
+                        <label for='input-numbers'>Numbers <span class='separator'>[ 0-9 ]</span></label>
+                    </div>
+                    <div class='input'>
+                        <input type='checkbox' id='input-specials' checked />
+                        <label for='input-specials'>Specials <span class='separator extended'>[ @&$!#? ]</span></label>
+                    </div>                
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type='text/javascript' src='modules/password-generator.js'></script>
+    <script type='text/javascript' src='controllers/main-password-generator.js'></script>
+    <script type="text/javascript" src="assets/zxcvbn/zxcvbn.js"></script>
+</body>
+
+</html>
