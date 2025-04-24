@@ -1,5 +1,5 @@
 # Password generator
-[Password generator live demo](https://yannickbrocart.github.io/password-generator/)
+[Password generator site](https://password-generator.yannickbrocart.com/)
 
 ## Table of Contents
 - [Overview](#overview)

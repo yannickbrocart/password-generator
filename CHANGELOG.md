@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+>## [1.1] - 2025-04-24
+>### Added
+>- Swap ttf fonts for woff2.
+
 >## [1.0] - 2025-04-23
 >### Added
 >- Initial release of project.
