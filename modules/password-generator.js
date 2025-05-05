@@ -11,15 +11,26 @@
 
 const CHAR_LOWERCASE	= 'abcdefghjkmnpqrstuvwxyz';
 const CHAR_UPPERCASE 	= 'ABCDEFGHJKMNPQRSTUVWXYZ';
-const CHAR_NUMBERS 	= '0123456789';
+const CHAR_NUMBERS 		= '0123456789';
 const CHAR_SPECIALS 	= "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~Â£";
-const CHAR_AMBIGUOUS	= 'IiLlOo10';
+const CHAR_AMBIGUOUS	= ['I', 'i', 'L', 'l', '|', '1', 'O', 'o', '0', '-', '_', ':', ';', '.', ',', '"', "'", '`'];
+const CHAR_BRACKETS		= ['<', '>', '(', ')', '[', ']', '{', '}'];
 const PASSWORD_STRENGTH = {
 	veryStrong: 'Very strong',
 	strong:     'Strong',
 	mediocre:   'Good',
 	weak:       'Weak',
 	veryWeak:   'Very weak'
+};
+const TAB_INPUTS		= {
+	lowercase: true,
+	uppercase: true,
+	numbers: true,
+	specials: true,
+	noAmbiguous: false,
+	noDuplicate: false,
+	noConsecutive: true,
+	all: true
 };
 
 
@@ -34,14 +45,9 @@ class PasswordGenerator {
 	passwordSlider;
 	sliderNumber = 12;
 	lenghtInput;
-	chosenCharacteres = CHAR_LOWERCASE + CHAR_UPPERCASE + CHAR_NUMBERS + CHAR_SPECIALS;
+	chosenCharacters = CHAR_LOWERCASE + CHAR_UPPERCASE + CHAR_NUMBERS + CHAR_SPECIALS;
 	passwordLenght = 16;
-	isAllCharacters = true;
-	isIncludeLowercase = true;
-	isIncludeUppercase = true;
-	isIncludeNumbers = true;
-	isIncludeSpecials = true;
-	
+		
 	// Constructor
     	constructor(passwordGeneratorDivId) {
 			this._initPasswordGeneratorComponents(passwordGeneratorDivId);
@@ -91,18 +97,22 @@ class PasswordGenerator {
 				input.addEventListener('change', (event) => { 
 					event.target.checked == true ? event.target.checked = true : event.target.checked = false;
 					this._handleInputOptions(event.target);
-					this._writeChosenCharacteres();
+					this._writeChosenCharacters();
 				});
 			});
 			this.passwordSettingsComponent = document.getElementById('password-settings');
 			this.passwordSettingsComponent.classList.add('hidden');
 		}
 
-		_handleInputOptions(input) {			
+		_handleInputOptions(input) {
 			if (input.id === 'input-lowercase' && input.checked == false ||
 				input.id === 'input-uppercase' && input.checked == false ||
 				input.id === 'input-numbers' && input.checked == false || 
-				input.id === 'input-specials' && input.checked == false) {
+				input.id === 'input-specials' && input.checked == false ||
+				input.id === 'input-no-ambiguous' && input.checked == true ||
+				input.id === 'input-no-duplicate' && input.checked == true ||
+				input.id === 'input-no-consecutive' && input.checked == true ||
+				input.id === 'input-no-bracket' && input.checked == true) {
 				document.getElementById('input-all').checked = false;
 			} 
 			if (input.id === 'input-all' && input.checked == true) {
@@ -110,27 +120,43 @@ class PasswordGenerator {
 				document.getElementById('input-uppercase').checked = true;
 				document.getElementById('input-numbers').checked = true;
 				document.getElementById('input-specials').checked = true;
+				document.getElementById('input-no-ambiguous').checked = false;
+				document.getElementById('input-no-bracket').checked = false;
 			}
 			if ((input.id === 'input-lowercase' || input.id === 'input-uppercase' ||
-				input.id === 'input-numbers' || input.id === 'input-specials') &&
+				input.id === 'input-numbers' || input.id === 'input-specials' ||
+				input.id === 'input-no-ambiguous' || input.id === 'input-no-duplicate' ||
+				input.id === 'input-no-consecutive' || input.id === 'input-no-bracket') &&
 				document.getElementById('input-lowercase').checked == true &&
 				document.getElementById('input-uppercase').checked == true &&
 				document.getElementById('input-numbers').checked == true &&
-				document.getElementById('input-specials').checked == true) {
+				document.getElementById('input-specials').checked == true &&
+				document.getElementById('input-no-ambiguous').checked == false &&
+				document.getElementById('input-no-bracket').checked == false) {
 				document.getElementById('input-all').checked = true;
 			}
 		}
 
-		_writeChosenCharacteres() {
-			this.chosenCharacteres = '';
+		_writeChosenCharacters() {
+			this.chosenCharacters = '';
 			if (document.getElementById('input-lowercase').checked == true)
-				this.chosenCharacteres += CHAR_LOWERCASE;
+				this.chosenCharacters += CHAR_LOWERCASE;
 			if (document.getElementById('input-uppercase').checked == true)
-				this.chosenCharacteres += CHAR_UPPERCASE;
+				this.chosenCharacters += CHAR_UPPERCASE;
 			if (document.getElementById('input-numbers').checked == true)
-				this.chosenCharacteres += CHAR_NUMBERS;
+				this.chosenCharacters += CHAR_NUMBERS;
 			if (document.getElementById('input-specials').checked == true)
-				this.chosenCharacteres += CHAR_SPECIALS;
+				this.chosenCharacters += CHAR_SPECIALS;
+			if (document.getElementById('input-no-ambiguous').checked == true) {
+				CHAR_AMBIGUOUS.forEach(function(characters){
+					this.chosenCharacters = this.chosenCharacters.replaceAll(characters, '');
+				}, this)
+			}
+			if (document.getElementById('input-no-bracket').checked == true) {
+				CHAR_BRACKETS.forEach(function(brackets){
+					this.chosenCharacters = this.chosenCharacters.replaceAll(brackets, '');
+				}, this)
+			}
 		}
 
 		_handleGenerate() {
@@ -181,11 +207,20 @@ class PasswordGenerator {
 		}
 
 		_generatePassword() {
-			let passwordGenerated = '';
+			var passwordGenerated = '';
+			var id = 0;
+			var newCharacter = '';
 			// loop for password length
-			for (let id = 0; id < this.passwordLenght; id++) {
+			while (id < this.passwordLenght) {
 				// random choice into the chosen caracteres
-				passwordGenerated += this.chosenCharacteres.charAt(Math.floor(Math.random() * this.chosenCharacteres.length));
+				newCharacter = this.chosenCharacters.charAt(Math.floor(Math.random() * this.chosenCharacters.length));
+				if ((document.getElementById('input-no-duplicate').checked == false ||
+					 (document.getElementById('input-no-duplicate').checked == true && passwordGenerated.includes(newCharacter) == false)) &&
+					(document.getElementById('input-no-consecutive').checked == false ||
+					 (document.getElementById('input-no-consecutive').checked == true && passwordGenerated.endsWith(newCharacter) == false))) {
+					passwordGenerated += newCharacter;
+					id++;
+				} 
 			}
 			return passwordGenerated;
 		}

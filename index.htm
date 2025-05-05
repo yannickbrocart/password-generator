@@ -71,10 +71,13 @@
             </div>
 
             <div id='password-settings' class='password-settings'>                
-                <div id='characteres-options' class='characteres-options'>
+                <div class='subtitle'>
+                    Include
+                </div>
+                <div id='include-characters' class='include-characters'>
                     <div class='input'>
                         <input type='checkbox' id='input-all' checked />
-                        <label for='input-all'>All characteres</label>
+                        <label for='input-all'>All characters</label>
                     </div>
                     <div class='input'>
                         <input type='checkbox' id='input-lowercase' checked />
@@ -91,6 +94,27 @@
                     <div class='input'>
                         <input type='checkbox' id='input-specials' checked />
                         <label for='input-specials'>Specials <span class='separator extended'>[ @&$!#? ]</span></label>
+                    </div>
+                </div>
+                <div class='subtitle'>
+                    Exclude
+                </div>
+                <div id='exclude-characters' class='exclude-characters'>
+                    <div class='input'>
+                        <input type='checkbox' id='input-no-ambiguous' />
+                        <label for='input-no-ambiguous'>No ambiguous characters <span class='separator'>[ il1L ]</span></label>
+                    </div>
+                    <div class='input'>
+                        <input type='checkbox' id='input-no-duplicate' />
+                        <label for='input-no-duplicate'>No duplicate characters</label>
+                    </div>
+                    <div class='input'>
+                        <input type='checkbox' id='input-no-consecutive' />
+                        <label for='input-no-consecutive'>No consecutive characters</label>
+                    </div>
+                    <div class='input'>
+                        <input type='checkbox' id='input-no-bracket' />
+                        <label for='input-no-bracket'>No brackets</label>
                     </div>                
                 </div>
             </div>

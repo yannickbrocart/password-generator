@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+>## [1.2] - 2025-05-05
+>### Added
+>- Exclude options.
+
 >## [1.1] - 2025-04-24
 >### Added
 >- Swap ttf fonts for woff2.

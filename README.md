@@ -24,7 +24,7 @@ You only need to upload the [folder](https://github.com/yannickbrocart/password_
 
 <!-- ROADMAP -->
 ## Roadmap
-- [ ] Add `avoid` and `exclude` options
+- [X] Add `exclude` options
 - [ ] Add `more passwords` functionality
 - [ ] Add `start with` options
 - [ ] Add `end with` options
